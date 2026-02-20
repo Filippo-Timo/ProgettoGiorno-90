@@ -30,7 +30,7 @@ public class Prenotazione {
 
     private LocalDate dataDiPrenotazione;
 
-    public Prenotazione(Utente utente, Evento evento, LocalDate dataDiPrenotazione) {
+    public Prenotazione(Utente utente, Evento evento) {
         this.utente = utente;
         this.evento = evento;
         this.dataDiPrenotazione = LocalDate.now();

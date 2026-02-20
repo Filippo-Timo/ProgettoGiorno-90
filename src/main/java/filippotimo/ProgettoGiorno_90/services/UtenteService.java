@@ -5,6 +5,7 @@ import filippotimo.ProgettoGiorno_90.exceptions.BadRequestException;
 import filippotimo.ProgettoGiorno_90.exceptions.NotFoundException;
 import filippotimo.ProgettoGiorno_90.payloads.UtenteDTO;
 import filippotimo.ProgettoGiorno_90.repositories.UtentiRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ public class UtenteService {
     private final UtentiRepository utentiRepository;
     private final PasswordEncoder bcrypt;
 
+    @Autowired
     public UtenteService(UtentiRepository utentiRepository, PasswordEncoder passwordEncoder) {
         this.utentiRepository = utentiRepository;
         this.bcrypt = passwordEncoder;

@@ -1,6 +1,5 @@
 package filippotimo.ProgettoGiorno_90.payloads;
 
-import filippotimo.ProgettoGiorno_90.entities.Utente;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,8 +21,6 @@ public record EventoDTO(
         @Size(min = 2, max = 30, message = "Il luogo dell'evento deve contenere tra i 2 e i 30 caratteri")
         String luogo,
         @NotNull(message = "Il numero di posti diponibili dell'evento è obbligatoria")
-        int numeroPostiDisponibili,
-        @NotNull(message = "L'ID dell'organizzatore è obbligatorio")
-        Utente organizzatoreId
+        int numeroPostiDisponibili
 ) {
 }
