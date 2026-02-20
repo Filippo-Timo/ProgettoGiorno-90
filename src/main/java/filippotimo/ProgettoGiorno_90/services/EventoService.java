@@ -3,6 +3,7 @@ package filippotimo.ProgettoGiorno_90.services;
 import filippotimo.ProgettoGiorno_90.entities.Evento;
 import filippotimo.ProgettoGiorno_90.entities.Utente;
 import filippotimo.ProgettoGiorno_90.exceptions.NotFoundException;
+import filippotimo.ProgettoGiorno_90.exceptions.UnauthorizedException;
 import filippotimo.ProgettoGiorno_90.payloads.EventoDTO;
 import filippotimo.ProgettoGiorno_90.repositories.EventiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,29 +64,37 @@ public class EventoService {
 
     // 4. PUT -> Modifica lo specifico Evento
 
-    public Evento findByIdAndUpdateEvento(Long eventoId, EventoDTO eventoDTO) {
-
+    public Evento findByIdAndUpdateEvento(Long eventoId, EventoDTO eventoDTO, Utente organizzatore) {
         Evento found = this.findEventoById(eventoId);
 
-        found.setTitolo(eventoDTO.titolo());
-        found.setDescrizione(eventoDTO.descrizione());
-        found.setData(eventoDTO.data());
-        found.setLuogo(eventoDTO.luogo());
-        found.setNumeroPostiDisponibili(eventoDTO.numeroPostiDisponibili());
+        if (found.getOrganizzatore().getId().equals(organizzatore.getId())) {
 
-        Evento modifiedEvento = this.eventiRepository.save(found);
+            found.setTitolo(eventoDTO.titolo());
+            found.setDescrizione(eventoDTO.descrizione());
+            found.setData(eventoDTO.data());
+            found.setLuogo(eventoDTO.luogo());
+            found.setNumeroPostiDisponibili(eventoDTO.numeroPostiDisponibili());
 
-        System.out.println("L'evento con titolo " + modifiedEvento.getTitolo() + " è stato modificato correttamente!");
+            Evento modifiedEvento = this.eventiRepository.save(found);
 
-        return modifiedEvento;
+            System.out.println("L'evento con titolo " + modifiedEvento.getTitolo() + " è stato modificato correttamente!");
+
+            return modifiedEvento;
+        } else {
+            throw new UnauthorizedException("Solo l'organizzatore proprietario di questo evento può modificarlo");
+        }
     }
 
 
     // 5. DELETE -> Cancella lo specifico Evento
 
-    public void findByIdAdDeleteEvento(Long eventoId) {
+    public void findByIdAdDeleteEvento(Long eventoId, Utente organizzatore) {
         Evento found = this.findEventoById(eventoId);
-        this.eventiRepository.delete(found);
+        if (found.getOrganizzatore().getId().equals(organizzatore.getId())) {
+            this.eventiRepository.delete(found);
+        } else {
+            throw new UnauthorizedException("Solo l'organizzatore proprietario di questo evento può cancellarlo");
+        }
     }
 
 }
