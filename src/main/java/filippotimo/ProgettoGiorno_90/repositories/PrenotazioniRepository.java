@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PrenotazioniRepository extends JpaRepository<Prenotazione, Long> {
+
+    boolean existsByUtenteIdAndEventoId(Long utenteId, Long eventoId);
+
 }
