@@ -32,9 +32,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public LoginResponseDTO login(@RequestBody LoginDTO body) {
-
         return new LoginResponseDTO(this.authService.checkCredentialsAndGenerateToken(body));
-
     }
 
 
@@ -42,7 +40,7 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public Utente createDipendente(@RequestBody @Validated UtenteDTO utenteDTO, BindingResult validationResult) {
+    public Utente createUtente(@RequestBody @Validated UtenteDTO utenteDTO, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             List<String> errorsList = validationResult.getFieldErrors()
                     .stream()

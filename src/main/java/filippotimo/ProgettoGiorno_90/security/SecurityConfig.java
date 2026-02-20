@@ -39,14 +39,14 @@ public class SecurityConfig {
         return httpSecurity.build();
 
     }
-    
+
 
 // ******************************** Bcrypt ********************************
 //  Tramite questo @Bean configuro BCrypt per la protezione delle password
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(14);
+    public PasswordEncoder getBCrypt() {
+        return new BCryptPasswordEncoder(13);
     }
 
 }

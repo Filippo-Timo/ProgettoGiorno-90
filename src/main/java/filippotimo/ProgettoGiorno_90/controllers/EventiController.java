@@ -5,7 +5,6 @@ import filippotimo.ProgettoGiorno_90.entities.Utente;
 import filippotimo.ProgettoGiorno_90.exceptions.ValidationException;
 import filippotimo.ProgettoGiorno_90.payloads.EventoDTO;
 import filippotimo.ProgettoGiorno_90.services.EventoService;
-import filippotimo.ProgettoGiorno_90.services.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -22,13 +21,11 @@ import java.util.List;
 public class EventiController {
 
     private final EventoService eventoService;
-    private final UtenteService utenteService;
 
     @Autowired
-    public EventiController(EventoService eventoService, UtenteService utenteService) {
+    public EventiController(EventoService eventoService) {
 
         this.eventoService = eventoService;
-        this.utenteService = utenteService;
     }
 
 
@@ -98,22 +95,11 @@ public class EventiController {
 
     @DeleteMapping("/{eventoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findViaggioByIdAndDelete(@AuthenticationPrincipal Utente organizzatore,
-                                         @PathVariable Long eventoId,
-                                         @Validated BindingResult validationResult) {
+    public void findViaggioByIdAndDelete(
+            @AuthenticationPrincipal Utente organizzatore,
+            @PathVariable Long eventoId) {
 
-        if (validationResult.hasErrors()) {
-
-            List<String> errorsList = validationResult.getFieldErrors()
-                    .stream()
-                    .map(fieldError -> fieldError.getDefaultMessage())
-                    .toList();
-
-            throw new ValidationException(errorsList);
-
-        } else {
-            this.eventoService.findByIdAdDeleteEvento(eventoId, organizzatore);
-        }
+        this.eventoService.findByIdAdDeleteEvento(eventoId, organizzatore);
     }
 
 
