@@ -66,4 +66,12 @@ public class UtenteService {
         return savedUtente;
     }
 
+
+    // 4. GET -> Cerca Utente per email
+
+    public Utente findUtenteByEmail(String email) {
+        return this.utentiRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("L'utente con email: " + email + " non esiste!"));
+    }
+
 }
