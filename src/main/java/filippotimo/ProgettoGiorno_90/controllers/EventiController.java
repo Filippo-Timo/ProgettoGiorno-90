@@ -72,10 +72,10 @@ public class EventiController {
     // 4. PUT URL/eventi/1 -> Modifica lo specifico evento
 
     @PutMapping("/{eventoId}")
-    public Evento findViaggioByIdAndUpdate(@AuthenticationPrincipal Utente organizzatore,
-                                           @PathVariable Long eventoId,
-                                           @RequestBody @Validated EventoDTO eventoDTO,
-                                           BindingResult validationResult) {
+    public Evento findEventoByIdAndUpdate(@AuthenticationPrincipal Utente organizzatore,
+                                          @PathVariable Long eventoId,
+                                          @RequestBody @Validated EventoDTO eventoDTO,
+                                          BindingResult validationResult) {
 
         if (validationResult.hasErrors()) {
 
@@ -95,7 +95,7 @@ public class EventiController {
 
     @DeleteMapping("/{eventoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findViaggioByIdAndDelete(
+    public void findEventoByIdAndDelete(
             @AuthenticationPrincipal Utente organizzatore,
             @PathVariable Long eventoId) {
 
